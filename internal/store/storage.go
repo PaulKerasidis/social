@@ -1,22 +1,22 @@
 package store
 
 import (
-"context"
-"database/sql"
+	"context"
+	"database/sql"
 )
-type Storage struct {
 
-	Posts interface{
+type Storage struct {
+	Posts interface {
 		Create(context.Context) error
 	}
-	Users interface{
+	Users interface {
 		Create(context.Context) error
 	}
 }
 
-func NewPostgresStorage(db *sql.DB) Storage {
+func NewStorage(db *sql.DB) Storage {
 	return Storage{
 		Posts: &PostStore{db: db},
-		Users: &UsersStore{db: db}, 
+		Users: &UsersStore{db: db},
 	}
-} 
+}
