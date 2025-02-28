@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/PaulKerasidis/social/internal/db"
 	"github.com/PaulKerasidis/social/internal/env"
 	"github.com/PaulKerasidis/social/internal/store"
 )
@@ -17,7 +18,18 @@ func main() {
 			maxIdleTime: env.GetString("DB_MAX_IDLE_TIME", "15m"),
 		},
 	}
-	store := store.NewStorage(nil)
+
+	db, err := db.New(
+		cfg.db.addr,
+		cfg.db.maxOpenConns,
+		cfg.db.maxIdleConns,
+		cfg.db.maxIdleTime,
+	)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	store := store.NewStorage(db)
 
 	app := &application{
 		config: cfg,
