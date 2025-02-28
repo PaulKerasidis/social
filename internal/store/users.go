@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
-	"os/user"
+	
 )
 
 type User struct {
