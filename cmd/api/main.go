@@ -11,11 +11,11 @@ import (
 func main() {
 	cfg := config{
 		addr: env.GetString("ADDR", ":8080"),
-		db:	dbConfig{
-			addr: env.GetString("DB_ADDR", "postgresql://postgres:adminpassword@localhost/social?sslmode=disable"),
+		db: dbConfig{
+			addr:         env.GetString("DB_ADDR", "postgresql://pauloskerasidis:adminpassword@localhost/social?sslmode=disable"),
 			maxOpenConns: env.GetInt("DB_MAX_OPEN_CONNS", 30),
 			maxIdleConns: env.GetInt("DB_MAX_IDLE_CONNS", 10),
-			maxIdleTime: env.GetString("DB_MAX_IDLE_TIME", "15m"),
+			maxIdleTime:  env.GetString("DB_MAX_IDLE_TIME", "15m"),
 		},
 	}
 
@@ -33,12 +33,10 @@ func main() {
 
 	app := &application{
 		config: cfg,
-		store: store,
+		store:  store,
 	}
-
 
 	mux := app.mount()
 
 	log.Fatal(app.run(mux))
 }
-
