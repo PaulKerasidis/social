@@ -29,6 +29,11 @@ func main() {
 		log.Panic(err)
 	}
 
+	defer db.Close()
+	log.Println("Database connection established")
+	
+
+
 	store := store.NewStorage(db)
 
 	app := &application{
